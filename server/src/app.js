@@ -7,6 +7,7 @@ import { errorHandler, AppError } from './middleware/errorHandler.js';
 import healthRoutes from './routes/health.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import userRoutes from './routes/user.routes.js';
+import eventRoutes from './routes/event.routes.js';
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use('/api/health', healthRoutes);
 // Auth & User routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/events', eventRoutes);
 
 // Fallback 404 for undefined routes
 app.use((req, res, next) => {
