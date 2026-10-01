@@ -1,0 +1,16 @@
+{
+  "name": "eventpulse-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "EventPulse — Event Finder & Tracker Platform",
+  "type": "module",
+  "scripts": {
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "install:all": "npm --prefix server install && npm --prefix client install",
+    "test:server": "npm --prefix server test"
+  },
+  "keywords": ["eventpulse", "events", "ticketmaster", "react", "express", "socketio"],
+  "author": "Vaidik (Vd)",
+  "license": "MIT"
+}
