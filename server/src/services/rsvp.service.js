@@ -14,6 +14,7 @@ export const createRsvp = async (userId, eventId, io = null) => {
 
   const snapshot = {
     title: event.title,
+    category: event.category || 'Other',
     venue: event.venue,
     startDateTime: event.startDateTime,
     url: event.url,

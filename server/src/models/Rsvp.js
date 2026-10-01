@@ -19,6 +19,7 @@ const rsvpSchema = new mongoose.Schema({
   },
   event: {
     title: { type: String, required: true },
+    category: { type: String, default: 'Other' },
     venue: { type: String, default: 'Venue TBA' },
     startDateTime: { type: String, required: true },
     url: { type: String, default: '' },

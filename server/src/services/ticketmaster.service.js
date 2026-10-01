@@ -12,6 +12,7 @@ const FALLBACK_EVENTS = [
   {
     id: 'tm_fallback_001',
     title: 'A.R. Rahman Live in Concert — Symphony of Peace',
+    category: 'Music',
     venue: 'DY Patil Stadium',
     city: 'Mumbai',
     date: '2026-10-10',
@@ -23,6 +24,7 @@ const FALLBACK_EVENTS = [
   {
     id: 'tm_fallback_002',
     title: 'International Tech & AI Innovators Summit 2026',
+    category: 'Miscellaneous',
     venue: 'Jio World Convention Centre',
     city: 'Mumbai',
     date: '2026-10-11',
@@ -34,6 +36,7 @@ const FALLBACK_EVENTS = [
   {
     id: 'tm_fallback_003',
     title: 'Coldplay — Music of the Spheres World Tour',
+    category: 'Music',
     venue: 'Narendra Modi Stadium',
     city: 'Ahmedabad',
     date: '2026-10-17',
@@ -45,6 +48,7 @@ const FALLBACK_EVENTS = [
   {
     id: 'tm_fallback_004',
     title: 'Zakir Khan — Tathastu Live Comedy Special',
+    category: 'Arts & Theatre',
     venue: 'NCPA Tata Theatre',
     city: 'Mumbai',
     date: '2026-10-18',
@@ -56,6 +60,7 @@ const FALLBACK_EVENTS = [
   {
     id: 'tm_fallback_005',
     title: 'Sunburn Arena Electronic Music Festival',
+    category: 'Music',
     venue: 'Mahalaxmi Race Course',
     city: 'Mumbai',
     date: '2026-10-24',
@@ -67,6 +72,7 @@ const FALLBACK_EVENTS = [
   {
     id: 'tm_fallback_006',
     title: 'Global Design & UX Leadership Conference',
+    category: 'Miscellaneous',
     venue: 'Palace Grounds',
     city: 'Bengaluru',
     date: '2026-10-25',
@@ -78,6 +84,7 @@ const FALLBACK_EVENTS = [
   {
     id: 'tm_fallback_007',
     title: 'Prateek Kuhad — Silhouettes Acoustic Tour',
+    category: 'Music',
     venue: 'Siri Fort Auditorium',
     city: 'Delhi',
     date: '2026-10-31',
@@ -105,9 +112,12 @@ export const normalizeTicketmasterEvent = (item) => {
   const time = item.dates?.start?.localTime || '';
   const startDateTime = item.dates?.start?.dateTime || (date ? new Date(date).toISOString() : new Date().toISOString());
 
+  const category = item.classifications?.[0]?.segment?.name || item.category || 'Other';
+
   return {
     id: item.id,
     title: item.name,
+    category,
     venue,
     city,
     date,
