@@ -4,6 +4,7 @@ import app from './app.js';
 import { env } from './config/env.js';
 import { connectDB } from './config/db.js';
 import { logger } from './utils/logger.js';
+import { registerChatSocket } from './sockets/chat.socket.js';
 
 const server = http.createServer(app);
 
@@ -14,6 +15,9 @@ export const io = new Server(server, {
     credentials: true
   }
 });
+
+// Register chat socket handlers
+registerChatSocket(io);
 
 // Attach socket reference to app for access in controllers if needed
 app.set('io', io);
