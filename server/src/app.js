@@ -10,6 +10,7 @@ import userRoutes from './routes/user.routes.js';
 import eventRoutes from './routes/event.routes.js';
 import rsvpRoutes from './routes/rsvp.routes.js';
 import reminderRoutes from './routes/reminder.routes.js';
+import shareRoutes from './routes/share.routes.js';
 
 const app = express();
 
@@ -45,6 +46,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/rsvps', rsvpRoutes);
 app.use('/api/reminders', reminderRoutes);
+app.use('/api/share', shareRoutes);
 
 // Fallback 404 for undefined routes
 app.use((req, res, next) => {
