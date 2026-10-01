@@ -51,8 +51,8 @@ Persistent floating Socket.IO Assistant providing sub-15ms natural language even
 
 1. **Clone the repository:**
    ```bash
-   git clone <repo-url>
-   cd eventpulse
+   git clone https://github.com/Vaidik-Pipaliya/EventPlus.git
+   cd EventPlus
    ```
 
 2. **Environment Variables:**
