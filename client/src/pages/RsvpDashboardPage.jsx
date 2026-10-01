@@ -7,11 +7,15 @@ import { ShareLinkModal } from '../components/events/ShareLinkModal.jsx';
 import { EmptyState } from '../components/ui/EmptyState.jsx';
 import { Skeleton } from '../components/ui/Skeleton.jsx';
 import { useToast } from '../components/ui/Toast.jsx';
+import { DashboardStatsSection } from '../components/dashboard/DashboardStatsSection.jsx';
 
 export const RsvpDashboardPage = () => {
   const [activeTab, setActiveTab] = useState('upcoming');
   const [dashboardData, setDashboardData] = useState({ upcoming: [], past: [], all: [] });
   const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState(null);
+  const [statsLoading, setStatsLoading] = useState(true);
+  const [statsError, setStatsError] = useState(null);
   const [activeShareEvent, setActiveShareEvent] = useState(null);
   const { showToast } = useToast();
 
@@ -27,8 +31,22 @@ export const RsvpDashboardPage = () => {
     }
   };
 
+  const fetchStats = async () => {
+    try {
+      setStatsLoading(true);
+      setStatsError(null);
+      const res = await apiClient.get('/api/dashboard/stats');
+      setStats(res.data?.data || null);
+    } catch (err) {
+      setStatsError(err.response?.data?.error?.message || err.message || 'Failed to load dashboard statistics');
+    } finally {
+      setStatsLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchRsvps();
+    fetchStats();
   }, []);
 
   const handleCancelRsvp = async (eventId, title) => {
@@ -37,6 +55,7 @@ export const RsvpDashboardPage = () => {
       await apiClient.delete(`/api/rsvps/${eventId}`);
       showToast('RSVP cancelled successfully');
       fetchRsvps();
+      fetchStats();
     } catch (err) {
       showToast(err.response?.data?.error?.message || 'Could not cancel RSVP', 'error');
     }
@@ -46,6 +65,7 @@ export const RsvpDashboardPage = () => {
     try {
       await apiClient.put(`/api/reminders/${eventId}`, { enabled, remindBefore });
       showToast(`Reminder updated: ${remindBefore} before event`);
+      fetchStats();
       // Update local state
       setDashboardData((prev) => {
         const updateList = (list) =>
@@ -85,6 +105,14 @@ export const RsvpDashboardPage = () => {
           </Button>
         </Link>
       </div>
+
+      {/* Stats Row & 3-Chart Analytics Section */}
+      <DashboardStatsSection
+        stats={stats}
+        loading={statsLoading}
+        error={statsError}
+        onRetry={fetchStats}
+      />
 
       {/* Tabs */}
       <div className="flex items-center gap-6 border-b border-app-border mb-6">
